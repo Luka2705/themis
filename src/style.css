@@ -726,6 +726,14 @@ progress {
     margin-top: var(--bs-gutter-y)
 }
 
+.hide-Scrollbar {
+    -ms-overflow-style: none;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}
+
 .col {
     -ms-flex: 1 0 0%;
     flex: 1 0 0%
@@ -4447,7 +4455,7 @@ fieldset:disabled .btn {
     }
 
     .navbar-expand-sm .navbar-nav-scroll {
-        overflow: visible
+        overflow: auto
     }
 
     .navbar-expand-sm .navbar-collapse {
@@ -4520,7 +4528,7 @@ fieldset:disabled .btn {
     }
 
     .navbar-expand-md .navbar-nav-scroll {
-        overflow: visible
+        overflow: auto
     }
 
     .navbar-expand-md .navbar-collapse {
@@ -4593,7 +4601,7 @@ fieldset:disabled .btn {
     }
 
     .navbar-expand-lg .navbar-nav-scroll {
-        overflow: visible
+        overflow: auto
     }
 
     .navbar-expand-lg .navbar-collapse {
@@ -4666,7 +4674,7 @@ fieldset:disabled .btn {
     }
 
     .navbar-expand-xl .navbar-nav-scroll {
-        overflow: visible
+        overflow: auto
     }
 
     .navbar-expand-xl .navbar-collapse {
@@ -4740,7 +4748,7 @@ fieldset:disabled .btn {
 }
 
 .navbar-expand .navbar-nav-scroll {
-    overflow: visible
+    overflow: auto
 }
 
 .navbar-expand .navbar-collapse {
@@ -5468,7 +5476,7 @@ fieldset:disabled .btn {
     display: -ms-flexbox;
     display: flex;
     height: .5rem;
-    overflow: hidden;
+    overflow: auto;
     font-size: .65625rem;
     background-color: #bdc5d1;
     border-radius: .5rem
@@ -5481,7 +5489,7 @@ fieldset:disabled .btn {
     flex-direction: column;
     -ms-flex-pack: center;
     justify-content: center;
-    overflow: hidden;
+    overflow: auto;
     color: #fff;
     text-align: center;
     white-space: nowrap;
@@ -5608,7 +5616,7 @@ fieldset:disabled .btn {
     display: none;
     width: 100%;
     height: 100%;
-    overflow-x: hidden;
+    overflow-x: auto;
     overflow-y: auto;
     outline: 0
 }
@@ -5650,7 +5658,7 @@ fieldset:disabled .btn {
 
 .modal-dialog-scrollable .modal-content {
     max-height: 100%;
-    overflow: hidden
+    overflow: auto
 }
 
 .modal-dialog-scrollable .modal-body {
@@ -6236,7 +6244,7 @@ fieldset:disabled .btn {
 .carousel-inner {
     position: relative;
     width: 100%;
-    overflow: hidden
+    overflow: auto
 }
 
 .carousel-inner::after {
@@ -7009,15 +7017,15 @@ fieldset:disabled .btn {
 }
 
 .overflow-hidden {
-    overflow: hidden !important
+    overflow: auto !important
 }
 
 .overflow-visible {
-    overflow: visible !important
+    overflow: auto !important
 }
 
 .overflow-scroll {
-    overflow: scroll !important
+    overflow: auto !important
 }
 
 .d-inline {
@@ -19914,7 +19922,7 @@ input[type=number] {
 
 .card-body-height {
     height: 21.25rem;
-    overflow: hidden;
+    overflow: auto;
     overflow-y: auto
 }
 
@@ -20062,7 +20070,7 @@ input[type=number] {
 }
 
 .card-progress-wrap {
-    overflow: hidden;
+    overflow: auto;
     border-top-left-radius: .75rem;
     border-top-right-radius: .75rem
 }
@@ -20472,7 +20480,7 @@ input[type=number] {
 }
 
 .navbar-expand .navbar-vertical-aside.navbar-vertical-fixed~.main {
-    padding-left: 16.25rem
+    padding-left: 12.25rem
 }
 
 @media (min-width:576px) {
@@ -20731,7 +20739,7 @@ input[type=number] {
     display: flex;
     -ms-flex-align: center;
     align-items: center;
-    overflow: hidden
+    overflow: auto
 }
 
 .dropdown-toggle::after {
@@ -20794,7 +20802,7 @@ input[type=number] {
     padding-bottom: 0;
     padding-left: 0;
     padding-right: 0;
-    overflow: hidden
+    overflow: auto
 }
 
 .dropdown-menu-form-search .card-body-height {
@@ -21344,7 +21352,7 @@ label.form-control {
 
 .form-attachment-btn {
     position: relative;
-    overflow: hidden;
+    overflow: auto;
     margin-bottom: 0
 }
 
@@ -21370,7 +21378,7 @@ label.form-control {
 
 .input-group-merge {
     position: relative;
-    overflow: hidden;
+    overflow: auto;
     border: .0625rem solid rgba(231, 234, 243, .7);
     border-radius: .3125rem
 }
@@ -22731,7 +22739,7 @@ label.form-control {
 
 .modal-top-cover {
     position: relative;
-    overflow: hidden;
+    overflow: auto;
     min-height: 8rem;
     border-top-right-radius: .6875rem;
     border-top-left-radius: .6875rem
@@ -23879,7 +23887,7 @@ label.form-control {
     .navbar-expand-sm.navbar-vertical.navbar-sidebar {
         -ms-flex-flow: column;
         flex-flow: column;
-        overflow-y: scroll;
+        overflow: auto;
         height: 100%;
         max-height: 100vh
     }
@@ -24088,7 +24096,7 @@ label.form-control {
     .navbar-expand-md.navbar-vertical.navbar-sidebar {
         -ms-flex-flow: column;
         flex-flow: column;
-        overflow-y: scroll;
+        overflow: auto;
         height: 100%;
         max-height: 100vh
     }
@@ -24297,7 +24305,7 @@ label.form-control {
     .navbar-expand-lg.navbar-vertical.navbar-sidebar {
         -ms-flex-flow: column;
         flex-flow: column;
-        overflow-y: scroll;
+        overflow: auto;
         height: 100%;
         max-height: 100vh
     }
@@ -24506,7 +24514,7 @@ label.form-control {
     .navbar-expand-xl.navbar-vertical.navbar-sidebar {
         -ms-flex-flow: column;
         flex-flow: column;
-        overflow-y: scroll;
+        overflow-y: auto;
         height: 100%;
         max-height: 100vh
     }
@@ -24715,7 +24723,7 @@ label.form-control {
     .navbar-expand-xxl.navbar-vertical.navbar-sidebar {
         -ms-flex-flow: column;
         flex-flow: column;
-        overflow-y: scroll;
+        overflow-y: auto;
         height: 100%;
         max-height: 100vh
     }
@@ -24923,7 +24931,7 @@ label.form-control {
 .navbar-expand.navbar-vertical.navbar-sidebar {
     -ms-flex-flow: column;
     flex-flow: column;
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 100%;
     max-height: 100vh
 }
@@ -24954,7 +24962,8 @@ label.form-control {
 }
 
 .navbar-expand .navbar-vertical.navbar-vertical-fixed {
-    height: 100%
+    height: 100%;
+    width: 100%
 }
 
 .navbar-expand .navbar-dropdown-menu-promo {
@@ -26009,7 +26018,7 @@ label.form-control {
 }
 
 .navbar-vertical-content {
-    overflow: hidden
+    overflow: auto
 }
 
 .navbar-vertical .nav-compact,
@@ -26049,8 +26058,8 @@ label.form-control {
     left: 0;
     bottom: 0;
     z-index: 100;
-    width: 16.25rem;
-    margin-left: -16.25rem
+    width: 16.55rem;
+    margin-left: -22.25rem
 }
 
 .navbar-vertical-fixed .navbar-vertical-footer {
@@ -26062,7 +26071,7 @@ label.form-control {
 
 .navbar-vertical-fixed .navbar-vertical-footer-offset {
     height: 100%;
-    padding-bottom: 4.25rem
+    padding-bottom: 0.25rem
 }
 
 .navbar-vertical.navbar-bordered {
@@ -26359,6 +26368,13 @@ label.form-control {
 
 .navbar-vertical-aside-closed-mode .navbar-vertical-aside {
     margin-left: -16.25rem
+}
+
+div.navbar-vertical-aside .nav.nav-pills {
+    padding-right: 0.25rem;
+    padding-left: 1.75rem;
+    padding-top: -0.25rem;
+    padding-bottom: -0.25rem;
 }
 
 .navbar-vertical-aside .nav.nav-pills {
@@ -26700,8 +26716,8 @@ label.form-control {
     }
 
     .navbar-vertical-aside-show-sm.navbar-vertical-aside-compact-mini-mode .navbar-vertical-aside-initialized .navbar-vertical-content {
-        overflow-y: scroll;
-        overflow-y: overlay
+        overflow-y: auto;
+        overflow-y: auto
     }
 
     .navbar-vertical-aside-show-sm.navbar-vertical-aside-mini-mode .navbar-vertical-aside .dropdown-header {
@@ -26848,8 +26864,8 @@ label.form-control {
     }
 
     .navbar-vertical-aside-show-md.navbar-vertical-aside-compact-mini-mode .navbar-vertical-aside-initialized .navbar-vertical-content {
-        overflow-y: scroll;
-        overflow-y: overlay
+        overflow-y: auto;
+        overflow-y: auto
     }
 
     .navbar-vertical-aside-show-md.navbar-vertical-aside-mini-mode .navbar-vertical-aside .dropdown-header {
@@ -26996,8 +27012,8 @@ label.form-control {
     }
 
     .navbar-vertical-aside-show-lg.navbar-vertical-aside-compact-mini-mode .navbar-vertical-aside-initialized .navbar-vertical-content {
-        overflow-y: scroll;
-        overflow-y: overlay
+        overflow-y: auto;
+        overflow-y: auto
     }
 
     .navbar-vertical-aside-show-lg.navbar-vertical-aside-mini-mode .navbar-vertical-aside .dropdown-header {
@@ -27144,8 +27160,8 @@ label.form-control {
     }
 
     .navbar-vertical-aside-show-xl.navbar-vertical-aside-compact-mini-mode .navbar-vertical-aside-initialized .navbar-vertical-content {
-        overflow-y: scroll;
-        overflow-y: overlay
+        overflow-y: auto;
+        overflow-y: auto
     }
 
     .navbar-vertical-aside-show-xl.navbar-vertical-aside-mini-mode .navbar-vertical-aside .dropdown-header {
@@ -27292,8 +27308,8 @@ label.form-control {
     }
 
     .navbar-vertical-aside-show-xxl.navbar-vertical-aside-compact-mini-mode .navbar-vertical-aside-initialized .navbar-vertical-content {
-        overflow-y: scroll;
-        overflow-y: overlay
+        overflow-y: auto;
+        overflow-y: auto
     }
 
     .navbar-vertical-aside-show-xxl.navbar-vertical-aside-mini-mode .navbar-vertical-aside .dropdown-header {
@@ -27439,8 +27455,8 @@ label.form-control {
 }
 
 .navbar-vertical-aside-show.navbar-vertical-aside-compact-mini-mode .navbar-vertical-aside-initialized .navbar-vertical-content {
-    overflow-y: scroll;
-    overflow-y: overlay
+    overflow-y: auto;
+    overflow-y: auto
 }
 
 .navbar-vertical-aside-show.navbar-vertical-aside-mini-mode .navbar-vertical-aside .dropdown-header {
@@ -27690,7 +27706,7 @@ label.form-control {
     .navbar-absolute-md-top .navbar-absolute-top-scroller {
         max-height: 75vh;
         background-color: #fff;
-        overflow: hidden;
+        overflow: auto;
         overflow-y: auto
     }
 
@@ -27715,7 +27731,7 @@ label.form-control {
     .navbar-absolute-top .navbar-absolute-top-scroller {
         max-height: 75vh;
         background-color: #fff;
-        overflow: hidden;
+        overflow: auto;
         overflow-y: auto
     }
 
@@ -27743,7 +27759,7 @@ label.form-control {
     .navbar-absolute-xl-top .navbar-absolute-top-scroller {
         max-height: 75vh;
         background-color: #fff;
-        overflow: hidden;
+        overflow: auto;
         overflow-y: auto
     }
 
@@ -27816,7 +27832,7 @@ label.form-control {
 @media (max-width:575.98px) {
     .navbar-sticky-md-top .navbar-sticky-top-scroller {
         max-height: 75vh;
-        overflow: hidden;
+        overflow: auto;
         overflow-y: auto
     }
 
@@ -27840,7 +27856,7 @@ label.form-control {
     .navbar-sticky-sm-top .navbar-sticky-top-scroller,
     .navbar-sticky-top .navbar-sticky-top-scroller {
         max-height: 75vh;
-        overflow: hidden;
+        overflow: auto;
         overflow-y: auto
     }
 
@@ -27867,7 +27883,7 @@ label.form-control {
 @media (max-width:991.98px) {
     .navbar-sticky-xl-top .navbar-sticky-top-scroller {
         max-height: 75vh;
-        overflow: hidden;
+        overflow: auto;
         overflow-y: auto
     }
 
@@ -28668,7 +28684,7 @@ label.form-control {
     position: absolute;
     bottom: 0;
     right: 0;
-    overflow: hidden;
+    overflow: auto;
     margin-bottom: 0
 }
 
@@ -28782,7 +28798,7 @@ label.form-control {
 .sliding-img {
     width: 100%;
     height: 281px;
-    overflow: hidden
+    overflow: auto
 }
 
 .sliding-img-frame-to-end,
@@ -29698,7 +29714,7 @@ label.form-control {
     }
 
     .step-sm.step-inline .step-item {
-        overflow: hidden
+        overflow: auto
     }
 
     .step-sm.step-inline .step-icon {
@@ -29741,7 +29757,7 @@ label.form-control {
     }
 
     .step-md.step-inline .step-item {
-        overflow: hidden
+        overflow: auto
     }
 
     .step-md.step-inline .step-icon {
@@ -29784,7 +29800,7 @@ label.form-control {
     }
 
     .step-lg.step-inline .step-item {
-        overflow: hidden
+        overflow: auto
     }
 
     .step-lg.step-inline .step-icon {
@@ -29827,7 +29843,7 @@ label.form-control {
     }
 
     .step-xl.step-inline .step-item {
-        overflow: hidden
+        overflow: auto
     }
 
     .step-xl.step-inline .step-icon {
@@ -30494,7 +30510,7 @@ a:hover .text-inherit {
 .devices {
     max-width: 1140px;
     position: relative;
-    overflow: hidden;
+    overflow: auto;
     padding: 0 .75rem 7rem;
     margin-right: -.75rem;
     margin-left: -.75rem
@@ -30602,7 +30618,7 @@ a:hover .text-inherit {
 
 .hs-nav-scroller-horizontal .nav {
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: auto;
     -ms-flex-wrap: nowrap;
     flex-wrap: nowrap;
     white-space: nowrap;
@@ -30687,7 +30703,7 @@ a:hover .text-inherit {
 
 .hs-nav-scroller-vertical {
     height: 100%;
-    overflow: hidden;
+    overflow: auto;
     overflow-y: auto
 }
 
@@ -30767,7 +30783,7 @@ a:hover .text-inherit {
 }
 
 .hs-fullscreen-on {
-    overflow: hidden
+    overflow: auto
 }
 
 .hs-fullscreen-icon-default {
@@ -30780,7 +30796,7 @@ a:hover .text-inherit {
 
 .chartjs-custom {
     position: relative;
-    overflow: hidden;
+    overflow: auto;
     margin-right: auto;
     margin-left: auto
 }
@@ -30905,7 +30921,7 @@ a:hover .text-inherit {
 .datatable-custom .sorting_desc {
     position: relative;
     cursor: pointer;
-    overflow: hidden
+    overflow: auto
 }
 
 .datatable-custom .sorting::after,
@@ -31252,8 +31268,8 @@ a:hover .text-inherit {
 }
 
 .dz-dropzone .dz-file-wrapper {
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow: auto;
+    text-overflow: auto;
     white-space: nowrap
 }
 
@@ -31631,8 +31647,8 @@ a:hover .text-inherit {
 
 .fullcalendar-custom .fc-daygrid-dot-event {
     display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow: auto;
+    text-overflow: auto;
     white-space: nowrap;
     color: #1e2022;
     background-color: rgba(55, 125, 255, .1);
@@ -31736,8 +31752,8 @@ a:hover .text-inherit {
 }
 
 .fullcalendar-custom .fc-event-title.fc-sticky {
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow: auto;
+    text-overflow: auto;
     white-space: nowrap;
     font-size: .8125rem
 }

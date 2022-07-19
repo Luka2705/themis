@@ -1,4 +1,4 @@
-import './style.css';
+import './App.css';
 import React from 'react';
 import svg from './img/illustration-4.png';
 
@@ -6,7 +6,7 @@ function Landing() {
     return (
         <div className="App">
             <div className="text">
-                <h1>Welcome to Themis</h1>
+                <h1 className='title'>Welcome to Themis</h1>
                 <p>Your personal Bill-Management System</p>
                 <a className="button" href="/dashboard">Let's start the Journey</a>
             </div>

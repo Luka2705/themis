@@ -49,6 +49,9 @@ body {
 }
 
 .title {
+  font-size: 200%;
+  color: #755540;
+  margin-bottom: 5%;
   font-family: sans-serif;
   text-align: center;
 }
@@ -67,6 +70,7 @@ div.text {
   color: #755540;
   border: none;
   padding: 15px 32px;
+  margin-top: 2%;
   text-align: center;
   text-decoration: none;
   display: inline-block;

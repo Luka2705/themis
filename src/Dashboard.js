@@ -19,18 +19,16 @@ function Dashboard() {
         });
     }
 
-    console.log(keys);
-
     return (
         <div className="has-navbar-vertical-aside navbar-vertical-aside-show-xl" style={{ backgroundColor: "#f2efe5" }}>
-            <aside className="navbar navbar-vertical-aside navbar-vertical navbar-vertical-fixed navbar-expand-xl navbar-bordered bg-white">
+            <aside className="navbar navbar-vertical-aside navbar-vertical navbar-vertical-fixed navbar-expand-xl navbar-bordered bg-white hidden">
                 <div className="navbar-vertical-container">
                     <div className="navbar-vertical-content">
                         <div className="nav nav-pills nav-vertical card-navbar-nav">
                             <h1 className="navbar-header">Themis</h1>
                             <span className="dropdown-header mt-4">Willkommen bei Themis</span>
                             <small className="bi-three-dots nav-subtitle-replacer"></small>
-                            <div className="nav-item selected">
+                            <div className="nav-item">
                                 <a className="nav-link " data-placement="left">
                                     <span className="nav-link-title">Dashboard</span>
                                 </a>
@@ -56,30 +54,33 @@ function Dashboard() {
             </aside>
 
             <div className="main splitted-content-main">
-                <div className="splitted-content-small ">
-                    <div className="navbar-vertical-container">
-                        <div className="navbar-vertical-content">
-                            <div className="nav nav-pills nav-vertical card-navbar-nav">
-                                {
-                                    keys.map((item, key) => {
-                                        return (
-                                            <div id={key}>
-                                                <a className="card card-center card-transition" onClick={() => setCurrentBill(item)}>
-                                                    <div className="card-body">
-                                                        <span className="card-subtitle">{billsMap.get(item).store}</span>
-                                                        <h3 className="card-title">{billsMap.get(item).date} - {billsMap.get(item).time}</h3>
-                                                        <p className="card-text text-body">#{item}</p>
-                                                    </div>
-                                                </a>
-                                                <hr />
-                                            </div>
+                <div className="splitted-content-small">
+                    <div className="navbar-vertical-aside navbar-vertical-fixed hide-Scrollbar" style={{ "width": "300px" }} >
+                        <div className="navbar-vertical-container">
+                            <div className="navbar-vertical-content">
+                                <div className="nav nav-pills nav-vertical card-navbar-nav">
+                                    {
+                                        keys.map((item, key) => {
+                                            return (
+                                                <div id={key}>
+                                                    <a className="card card-center card-transition" onClick={() => setCurrentBill(item)}>
+                                                        <div className="card-body">
+                                                            <span className="card-subtitle">{billsMap.get(item).store}</span>
+                                                            <h3 className="card-title">{billsMap.get(item).date} - {billsMap.get(item).time}</h3>
+                                                            <p className="card-text text-body">#{item}</p>
+                                                        </div>
+                                                    </a>
+                                                    <hr />
+                                                </div>
 
-                                        );
-                                    })
-                                }
+                                            );
+                                        })
+                                    }
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
 
                 <div className="splitted-content-fluid content-space" id="bill">
@@ -98,7 +99,7 @@ function Dashboard() {
 }
 
 function BillCard({ props, bills }) {
-    if (props == "") {
+    if (props === "") {
         return (
             <div>
 
