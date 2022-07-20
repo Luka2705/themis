@@ -4501,7 +4501,7 @@ fieldset:disabled .btn {
         -ms-flex-positive: 0;
         flex-grow: 0;
         padding: 0;
-        overflow-y: auto;
+        overflow-y: scroll;
     }
 }
 
