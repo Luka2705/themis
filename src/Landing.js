@@ -10,7 +10,7 @@ function Landing() {
                 <p>Your personal Bill-Management System</p>
                 <a className="button" href="/dashboard">Let's start the Journey</a>
             </div>
-            <img className="backgroundImage" src={svg} alt="Background-Image"></img>
+            <img className="backgroundImage" src={svg} alt="background"></img>
 
         </div >
     );
