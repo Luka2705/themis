@@ -3,7 +3,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { db } from './firebase-config';
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, doc, setDoc } from "firebase/firestore";
 
 function Dashboard() {
 
@@ -16,7 +16,7 @@ function Dashboard() {
 
   //Initial Hash Map for the bill Entries
   useEffect(() => {
-    updateBillEntries(new Map(billentries.set(0, { name: "Item Name", quantity: 1, rate: 0, pricePerItem: 0, selected: updateIndicator })));
+    updateBillEntries(new Map(billentries.set(0, { name: "Item Name", quantity: 1, pricePerUnit: 0, price: 0, selected: updateIndicator })));
   }, []);
 
   //Sets the Quantity Counter in Hash Map for specific Item
@@ -32,15 +32,19 @@ function Dashboard() {
       reloadHashMap(updateIndicator => !updateIndicator);
     }
     //Update Amount for one Item after in-/decreasing the Quantity 
-    billentries.get(key).pricePerItem = Math.round((billentries.get(key).rate * billentries.get(key).quantity) * 100) / 100;
+    billentries.get(key).price = Math.round((billentries.get(key).pricePerUnit * billentries.get(key).quantity) * 100) / 100;
     calculateResultPrice();
+  }
+
+  const setItemName = (key, e) => {
+    billentries.get(key).name = e.target.value;
   }
 
   //Calculates the Price of one Item
   const calculateItemPrice = (key, e) => {
     //Item Calculation
-    billentries.get(key).rate = e.target.value;
-    billentries.get(key).pricePerItem = Math.round((billentries.get(key).rate * billentries.get(key).quantity) * 100) / 100;
+    billentries.get(key).pricePerUnit = e.target.value;
+    billentries.get(key).price = Math.round((billentries.get(key).pricePerUnit * billentries.get(key).quantity) * 100) / 100;
 
     calculateResultPrice();
     //Update Values in HashMap
@@ -52,7 +56,7 @@ function Dashboard() {
   const calculateResultPrice = () => {
     //Generall Price Calculation
     billentries.forEach(item => {
-      resultPrice += item.pricePerItem;
+      resultPrice += item.price;
     });
     updatePrice(resultPrice);
   }
@@ -129,7 +133,7 @@ function Dashboard() {
                         <dl className="row align-items-sm-center mb-0">
                           <h1 className="text-primary col-md mb-2 mb-sm-0">Date: </h1>
                           <dd className="col-md-auto mb-0">
-                            <input type="date" className="form-control w-auto" placeholder="12.Mai.2022" aria-label="" value="2022-08-15" onChange={(e) => { updateDate(e.target.value) }} />
+                            <input type="date" className="form-control w-auto" placeholder="12.Mai.2022" aria-label="" value={date} onChange={(e) => { updateDate(e.target.value) }} />
                           </dd>
                         </dl>
                       </div>
@@ -162,11 +166,11 @@ function Dashboard() {
                     </div>
 
                     <div className="col-sm-2 d-none d-sm-inline-block">
-                      <h6 className="card-title text-cap">Rate</h6>
+                      <h6 className="card-title text-cap">Price Per Unit</h6>
                     </div>
 
                     <div className="col-sm-2 d-none d-sm-inline-block">
-                      <h6 className="card-title text-cap">Amount</h6>
+                      <h6 className="card-title text-cap">Price</h6>
                     </div>
                   </div>
                 </div>
@@ -176,7 +180,7 @@ function Dashboard() {
                     return (
                       <div key={key} className="row">
                         <div className="col-md-5">
-                          <input type="text" className="form-control mb-3" placeholder={item.name} aria-label="Item name" />
+                          <input type="text" className="form-control mb-3" placeholder={item.name} aria-label="Item name" onChange={(e) => { setItemName(key, e) }} />
                         </div>
 
                         <div className="col-12 col-sm-auto col-md-3">
@@ -204,12 +208,12 @@ function Dashboard() {
 
                         <div className="col-12 col-sm col-md-2">
                           <div className="mb-3">
-                            <input id="rateIndicator" type="number" className="form-control" aria-label="00" defaultValue={item.rate} onChange={(e) => { calculateItemPrice(key, e) }} />
+                            <input id="rateIndicator" type="number" className="form-control" aria-label="00" defaultValue={item.pricePerUnit} onChange={(e) => { calculateItemPrice(key, e) }} />
                           </div>
                         </div>
 
                         <div class="col">
-                          <input type="number" className="form-control-plaintext" placeholder={"€ " + item.pricePerItem} aria-label="$0.00" value="" onChange={(e) => { }} />
+                          <input type="number" className="form-control-plaintext" placeholder={"€ " + item.price} aria-label="$0.00" value="" onChange={(e) => { }} />
                         </div>
 
                         <div className="col-auto">
@@ -224,7 +228,7 @@ function Dashboard() {
 
                   })
                 }
-                <a className="js-create-field form-link" onClick={() => updateBillEntries(new Map(billentries.set(billentries.size, { name: "Item Name", quantity: 1, rate: 0, pricePerItem: 0 })))}><i className="bi-plus"></i>Add item</a>
+                <a className="js-create-field form-link" onClick={() => updateBillEntries(new Map(billentries.set(billentries.size, { name: "Item Name", quantity: 1, pricePerUnit: 0, price: 0 })))}><i className="bi-plus"></i>Add item</a>
 
                 <hr className="my-5" />
 
@@ -249,19 +253,22 @@ function Dashboard() {
 }
 
 async function createBill(billentries, price, storeName, date) {
-  const billentriesObject = Object.fromEntries(billentries);
-  console.log(billentriesObject)
+  const obj = Object.fromEntries(billentries);
+  const roundedPrice = Math.round((price) * 100) / 100
+  var today = new Date();
+  var time = today.getHours() + ":" + today.getMinutes();
 
   // Add a new document with a generated id.
-  const docRef = await addDoc(collection(db, "bills"), {
-    boughtArticles: billentriesObject,
-    date: "Japan",
-    payedPrice: price,
-    store: storeName,
+  const docRef = await addDoc(collection(db, "bills"), { boughtArticles: {} });
+
+  //Add Items to the document created above.
+  await setDoc(doc(db, "bills", docRef.id), {
+    boughtArticles: obj,
     date: date,
-    paymentMethod: "card"
+    payedPrice: roundedPrice,
+    store: storeName,
+    time: time
   });
-  console.log("Document written with ID: ", docRef.id);
 }
 
 export default Dashboard;
