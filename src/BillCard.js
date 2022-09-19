@@ -1,7 +1,7 @@
 import './style.css';
 import React from 'react';
 import { db } from './firebase-config';
-import { doc, deleteDoc} from "firebase/firestore";
+import { doc, deleteDoc } from "firebase/firestore";
 import Swal from 'sweetalert2'
 
 
@@ -92,21 +92,21 @@ async function deleteBill(props) {
         text: 'Willst du den Kassenzettel wirklich löschen',
         icon: 'warning',
         showDenyButton: true,
-        confirmButtonText: 'Jo',
-        denyButtonText: 'Nö' 
+        confirmButtonText: 'Löschen',
+        denyButtonText: 'Abbrechen'
     }).then(async (result) => {
         if (result.isConfirmed) {
             await deleteDoc(doc(db, "bills", props)).then(() => {
                 Swal.fire('Gelöscht!', '', 'success');
             })
         } else if (result.isDenied) {
-          Swal.fire('Der Kassenzettel wurde nicht gelöscht', '', 'info')
+            Swal.fire('Der Kassenzettel wurde nicht gelöscht', '', 'info')
         }
-      })
+    })
     /*
      
      */
-    
+
 }
 
 export default BillCard;
