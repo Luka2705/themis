@@ -253,8 +253,11 @@ function Dashboard() {
 }
 
 async function createBill(billentries, price, storeName, date) {
+  //Format the billentries to right Object format
   const obj = Object.fromEntries(billentries);
-  const roundedPrice = Math.round((price) * 100) / 100
+  const roundedPrice = Math.round((price) * 100) / 100;
+
+  //Get current Time for Receipt
   var today = new Date();
   var time = today.getHours() + ":" + today.getMinutes();
 
@@ -265,9 +268,16 @@ async function createBill(billentries, price, storeName, date) {
   await setDoc(doc(db, "bills", docRef.id), {
     boughtArticles: obj,
     date: date,
-    payedPrice: roundedPrice,
+    payedPrice: roundedPrice + " €",
     store: storeName,
     time: time
+  }).then(() => {
+    Swal.fire({
+      title: 'Kassenzettel erstellt!',
+      text: 'Dein Kassenzettel wurde erfolgreich mit der ID #' + docRef.id + ' erstellt',
+      icon: 'success',
+      confirmButtonText: 'Ok'
+    })
   });
 }
 

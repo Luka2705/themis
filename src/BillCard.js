@@ -97,11 +97,26 @@ async function deleteBill(props) {
     }).then(async (result) => {
         if (result.isConfirmed) {
             await deleteDoc(doc(db, "bills", props)).then(() => {
-                Swal.fire('Gelöscht!', '', 'success');
+                Swal.fire({
+                    title: 'Geschafft',
+                    text: 'Kassenzettel wurde gelöscht',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    window.location.href = "/dashboard";
+                });
             })
         } else if (result.isDenied) {
-            Swal.fire('Der Kassenzettel wurde nicht gelöscht', '', 'info')
+            Swal.fire({
+                title: 'Ups...',
+                text: 'Kassenzettel wurde nicht gelöscht',
+                icon: 'info',
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.href = "/dashboard";
+            });
         }
+
     })
     /*
      
