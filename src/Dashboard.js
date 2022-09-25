@@ -1,8 +1,9 @@
 import './style.css';
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { db } from './firebase-config';
-import { collection, getDocs } from "firebase/firestore";
+import { db, auth } from './firebase-config';
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { onAuthStateChanged } from 'firebase/auth';
 import BillCard from './BillCard';
 
 function Dashboard() {
@@ -12,14 +13,21 @@ function Dashboard() {
     const [billStyleIndicator, setStyleIndicator] = useState("visible");
     const [billClassIndicator, setClassIndicator] = useState("js-offcanvas-start offcanvas offcanvas-start splitted-content-small splitted-content-bordered d-flex flex-column");
     const [count, increaseCount] = useState(0);
+    const [currentUserID, setUserID] = useState("");
 
 
     useEffect(() => { window.addEventListener("resize", handleResize) })
 
     useEffect(() => { fetchData() }, []);
 
+    onAuthStateChanged(auth, (currentUser) => {
+        console.log(currentUser.uid);
+        setUserID(currentUser.uid);
+    })
+
     async function fetchData() {
-        const querySnapshot = await getDocs(collection(db, "bills"));
+        const q = query(collection(db, "bills"), where("user", "==", "WgJ0Mn4CrqYZBo9iG7Mve8PBooB2"));
+        const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             setBillsMap(new Map(billsMap.set(doc.id, doc.data())));
             setKeys(currentArray => [...currentArray, doc.id]);

@@ -16,7 +16,7 @@ function Dashboard() {
 
   //Initial Hash Map for the bill Entries
   useEffect(() => {
-    updateBillEntries(new Map(billentries.set(0, { name: "Item Name", quantity: 1, pricePerUnit: 0, price: 0, selected: updateIndicator })));
+    updateBillEntries(new Map(billentries.set(0, { name: "Item Name", quantity: 1, pricePerUnit: 0, price: 0 + " €", selected: updateIndicator })));
   }, []);
 
   //Sets the Quantity Counter in Hash Map for specific Item
@@ -213,7 +213,7 @@ function Dashboard() {
                         </div>
 
                         <div class="col">
-                          <input type="number" className="form-control-plaintext" placeholder={"€ " + item.price} aria-label="$0.00" value="" onChange={(e) => { }} />
+                          <input type="number" className="form-control-plaintext" placeholder={item.price} aria-label="$0.00" value="" onChange={(e) => { }} />
                         </div>
 
                         <div className="col-auto">

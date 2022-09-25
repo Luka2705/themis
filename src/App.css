@@ -39,6 +39,25 @@ body {
   opacity: 0.8;
 }
 
+.backgroundImage-login {
+  position: absolute;
+  width: 60%;
+  height: auto;
+  z-index: -1;
+  left: 0%;
+  bottom: 0px;
+  opacity: 0.4;
+}
+
+.loginForm {
+  position: absolute;
+  width: 50%;
+  height: auto;
+  z-index: 0;
+  left: 60%;
+  bottom: 0px;
+}
+
 .main-content {
   height: 100%;
   width: 75%;
@@ -60,6 +79,14 @@ div.text {
   line-height: 80%;
   z-index: 1;
   margin-right: 55%;
+  align-items: center;
+  text-align: center;
+}
+
+div.text-login {
+  line-height: 80%;
+  z-index: 1;
+  margin-left: 55%;
   align-items: center;
   text-align: center;
 }

@@ -8,7 +8,7 @@ function Landing() {
             <div className="text">
                 <h1 className='title'>Welcome to Themis</h1>
                 <p>Your personal Bill-Management System</p>
-                <a className="button" href="/dashboard">Let's start the Journey</a>
+                <a className="button" href="/login">Let's start the Journey</a>
             </div>
             <img className="backgroundImage" src={svg} alt="background"></img>
 
