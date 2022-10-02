@@ -13,20 +13,13 @@ function Dashboard() {
     const [billStyleIndicator, setStyleIndicator] = useState("visible");
     const [billClassIndicator, setClassIndicator] = useState("js-offcanvas-start offcanvas offcanvas-start splitted-content-small splitted-content-bordered d-flex flex-column");
     const [count, increaseCount] = useState(0);
-    const [currentUserID, setUserID] = useState("");
-
 
     useEffect(() => { window.addEventListener("resize", handleResize) })
 
-    useEffect(() => { fetchData() }, []);
+    useEffect(() => { onAuthStateChanged(auth, (currentUser) => { fetchData(currentUser.uid) }); }, []);
 
-    onAuthStateChanged(auth, (currentUser) => {
-        console.log(currentUser.uid);
-        setUserID(currentUser.uid);
-    })
-
-    async function fetchData() {
-        const q = query(collection(db, "bills"), where("user", "==", "WgJ0Mn4CrqYZBo9iG7Mve8PBooB2"));
+    async function fetchData(prop) {
+        const q = query(collection(db, "bills"), where("user", "==", prop));
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             setBillsMap(new Map(billsMap.set(doc.id, doc.data())));

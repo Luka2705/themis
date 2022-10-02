@@ -2,7 +2,8 @@ import './style.css';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
-import { db } from './firebase-config';
+import { db, auth } from './firebase-config';
+import { onAuthStateChanged } from 'firebase/auth';
 import { collection, addDoc, doc, setDoc } from "firebase/firestore";
 
 function Dashboard() {
@@ -12,7 +13,15 @@ function Dashboard() {
   const [price, updatePrice] = useState(0);
   const [storeName, updateStoreName] = useState("");
   const [date, updateDate] = useState();
+  const [user, setUser] = useState("");
   let resultPrice = 0;
+
+  //Set Current User
+  useEffect(() => {
+    onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser.uid)
+    })
+  }, []);
 
   //Initial Hash Map for the bill Entries
   useEffect(() => {
@@ -242,7 +251,7 @@ function Dashboard() {
                     </dl>
                   </div>
                 </div>
-                <button className="btn btn-primary" onClick={() => createBill(billentries, price, storeName, date)}>Submit</button>
+                <button className="btn btn-primary" onClick={() => createBill(billentries, price, storeName, date, user)}>Submit</button>
               </div>
             </div>
           </div>
@@ -252,7 +261,8 @@ function Dashboard() {
   }
 }
 
-async function createBill(billentries, price, storeName, date) {
+async function createBill(billentries, price, storeName, date, user) {
+
   //Format the billentries to right Object format
   const obj = Object.fromEntries(billentries);
   const roundedPrice = Math.round((price) * 100) / 100;
@@ -270,13 +280,16 @@ async function createBill(billentries, price, storeName, date) {
     date: date,
     payedPrice: roundedPrice + " €",
     store: storeName,
-    time: time
+    time: time,
+    user: user
   }).then(() => {
     Swal.fire({
       title: 'Kassenzettel erstellt!',
       text: 'Dein Kassenzettel wurde erfolgreich mit der ID #' + docRef.id + ' erstellt',
       icon: 'success',
       confirmButtonText: 'Ok'
+    }).then(() => {
+      window.location.href = "/dashboard";
     })
   });
 }

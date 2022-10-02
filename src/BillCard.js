@@ -6,7 +6,6 @@ import Swal from 'sweetalert2'
 
 
 function BillCard({ props, bills }) {
-    console.log(props);
     if (props === "") {
         return (
             <div>
