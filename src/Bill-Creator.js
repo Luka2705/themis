@@ -5,6 +5,10 @@ import Swal from 'sweetalert2';
 import { db, auth } from './firebase-config';
 import { onAuthStateChanged } from 'firebase/auth';
 import { collection, addDoc, doc, setDoc } from "firebase/firestore";
+import badge from './img/icons/person-badge.svg';
+import clipboard from './img/icons/clipboard-data.svg'
+import plus from './img/icons/plus-square.svg'
+import hourglass from './img/icons/hourglass-split.svg'
 
 function Dashboard() {
 
@@ -106,25 +110,32 @@ function Dashboard() {
                   <small className="bi-three-dots nav-subtitle-replacer"></small>
                   <div className="nav-item">
                     <a className="nav-link " href="/dashboard" data-placement="left">
+                      <img src={clipboard} className="bi-person nav-icon" width={20} height={20} />
                       <span className="nav-link-title">Dashboard</span>
                     </a>
                   </div>
                   <div className="nav-item">
-                    <a className="nav-link " href="/history" data-placement="left">
-                      <span className="nav-link-title">Historie</span>
-                    </a>
-                  </div>
-                  <div className="nav-item">
                     <a className="nav-link " href="/createBill" data-placement="left">
+                      <img src={plus} className="bi-person nav-icon" width={20} height={20} />
                       <span className="nav-link-title">Kassenzettel erstellen</span>
                     </a>
                   </div>
                   <div className="nav-item">
+                    <a className="nav-link " href="/history" data-placement="left">
+                      <img src={hourglass} className="bi-person nav-icon" width={20} height={20} />
+                      <span className="nav-link-title">Historie</span>
+                    </a>
+                  </div>
+                  <div className="nav-item">
                     <a className="nav-link " href="/account" data-placement="left">
+                      <img src={badge} className="bi-person nav-icon" width={20} height={20} />
                       <span className="nav-link-title">Dein Konto</span>
                     </a>
                   </div>
                 </div>
+              </div>
+              <div className="navbar-vertical-footer">
+                <a className="btn btn-ghost-secondary" style={{ marginLeft: 50 }} href="/">Log Out</a>
               </div>
             </div>
           </div>
@@ -244,10 +255,10 @@ function Dashboard() {
                 <div className="row justify-content-md-end mb-3">
                   <div className="col-md-auto">
                     <dl className="row text-md-end">
-                      <dt className="col-md-6">Brutto:</dt>
-                      <dd className="col-md-6">€{Math.round((price * 0.81) * 100) / 100}</dd>
-                      <dt className="col-md-6">Total:</dt>
-                      <dd className="col-md-6">€{Math.round((price) * 100) / 100}</dd>
+                      <h2 className="col-md-6">Netto:</h2>
+                      <h2 className="col-md-6">€{Math.round((price * 0.81) * 100) / 100}</h2>
+                      <h1 className="col-md-6">Total:</h1>
+                      <h1 className="col-md-6">€{Math.round((price) * 100) / 100}</h1>
                     </dl>
                   </div>
                 </div>

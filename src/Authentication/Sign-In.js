@@ -1,15 +1,17 @@
-import './style.css';
+import '../style.css';
 import React from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from "./firebase-config";
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { auth } from "../firebase-config";
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 
 function SignIn() {
     const [emailInput, setEmail] = useState("");
-    const [nameInput, setName] = useState("");
+    const [preName, setName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [passwordInput, setPassword] = useState("");
     const [validationPassword, setValidationPassword] = useState("");
+    const [pictureMetadata, setPic] = useState("");
 
     const validatePassword = () => {
         if (validationPassword === passwordInput) {
@@ -31,13 +33,17 @@ function SignIn() {
                 emailInput,
                 passwordInput
             );
-            Swal.fire({
-                title: 'Herzlich Willkommen ' + nameInput + ' !',
-                text: 'Dein Account wurde erstellt und du wurdest erfolgreich eingeloggt',
-                icon: 'success',
-                confirmButtonText: 'Zum Dashboard'
+            updateProfile(auth.currentUser, {
+                displayName: preName + " " + lastName
             }).then(() => {
-                window.location.href = "/dashboard";
+                Swal.fire({
+                    title: 'Herzlich Willkommen ' + preName + ' !',
+                    text: 'Dein Account wurde erstellt und du wurdest erfolgreich eingeloggt',
+                    icon: 'success',
+                    confirmButtonText: 'Zum Dashboard'
+                }).then(() => {
+                    window.location.href = "/dashboard";
+                })
             })
         } catch (error) {
             console.log(error.message);
@@ -72,7 +78,7 @@ function SignIn() {
 
                                     <div className="col-sm-6">
                                         <div className="mb-4">
-                                            <input type="text" className="form-control form-control-lg" placeholder="Mustermann" aria-label="Williams" required />
+                                            <input type="text" className="form-control form-control-lg" placeholder="Mustermann" aria-label="Williams" required onChange={(e) => { setLastName(e.target.value) }} />
                                             <span className="invalid-feedback">Nachname.</span>
                                         </div>
                                     </div>

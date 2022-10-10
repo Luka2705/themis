@@ -1,7 +1,7 @@
-import './style.css';
+import '../style.css';
 import React from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from "./firebase-config";
+import { auth } from "../firebase-config";
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 
@@ -38,8 +38,8 @@ function Login() {
                             <form className="js-validate needs-validation" noValidate>
                                 <div className="text-center">
                                     <div className="mb-5">
-                                        <h1 className="display-5">Themis - Sign in</h1>
-                                        <p>Du hast noch keinen Account ? <a className="link" href="./signIn">Hier registrieren</a></p>
+                                        <h1 className="display-5">Themis - Log in</h1>
+                                        <p>Du hast noch keinen Account ? <a className="link" href="./signIn">Registriere dich hier</a></p>
                                     </div>
                                     <span className="divider-center text-muted mb-4">ODER</span>
                                 </div>

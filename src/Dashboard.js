@@ -5,6 +5,10 @@ import { db, auth } from './firebase-config';
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { onAuthStateChanged } from 'firebase/auth';
 import BillCard from './BillCard';
+import badge from './img/icons/person-badge.svg';
+import clipboard from './img/icons/clipboard-data.svg'
+import plus from './img/icons/plus-square.svg'
+import hourglass from './img/icons/hourglass-split.svg'
 
 function Dashboard() {
     const [currentBill, setCurrentBill] = useState("");
@@ -45,6 +49,8 @@ function Dashboard() {
     }
 
     return (
+
+
         <div className="has-navbar-vertical-aside navbar-vertical-aside-show-xl" style={{ backgroundColor: "#f2efe5" }}>
             <aside className="js-navbar-vertical-aside navbar navbar-vertical-aside navbar-vertical navbar-vertical-fixed navbar-expand-xl navbar-bordered bg-white  ">
                 <div className="navbar-vertical-footer-offset">
@@ -56,25 +62,32 @@ function Dashboard() {
                                 <small className="bi-three-dots nav-subtitle-replacer"></small>
                                 <div className="nav-item">
                                     <a className="nav-link " data-placement="left">
+                                        <img src={clipboard} className="bi-person nav-icon" width={20} height={20} />
                                         <span className="nav-link-title">Dashboard</span>
                                     </a>
                                 </div>
                                 <div className="nav-item">
-                                    <a className="nav-link " href="/history" data-placement="left">
-                                        <span className="nav-link-title">Historie</span>
-                                    </a>
-                                </div>
-                                <div className="nav-item">
                                     <a className="nav-link " href="/createBill" data-placement="left">
+                                        <img src={plus} className="bi-person nav-icon" width={20} height={20} />
                                         <span className="nav-link-title">Kassenzettel erstellen</span>
                                     </a>
                                 </div>
                                 <div className="nav-item">
+                                    <a className="nav-link " href="/history" data-placement="left">
+                                        <img src={hourglass} className="bi-person nav-icon" width={20} height={20} />
+                                        <span className="nav-link-title">Historie</span>
+                                    </a>
+                                </div>
+                                <div className="nav-item">
                                     <a className="nav-link " href="/account" data-placement="left">
+                                        <img src={badge} className="bi-person nav-icon" width={20} height={20} />
                                         <span className="nav-link-title">Dein Konto</span>
                                     </a>
                                 </div>
                             </div>
+                        </div>
+                        <div className="navbar-vertical-footer">
+                            <a className="btn btn-ghost-secondary" style={{ marginLeft: 50 }} href="/">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -127,7 +140,7 @@ function Dashboard() {
                     </div>
                     <div className="mt-xl-10">
                         <div className="row">
-                            <div className="col-lg-12"> {<BillCard props={currentBill} bills={billsMap} />}</div>
+                            <div className="col-lg-12"> {<BillCard billID={currentBill} bills={billsMap} />}</div>
                         </div>
                     </div>
                 </div>
@@ -136,7 +149,6 @@ function Dashboard() {
 
         </div >
     );
-
 }
 
 export default Dashboard;

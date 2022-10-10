@@ -5,12 +5,12 @@ import { doc, deleteDoc } from "firebase/firestore";
 import Swal from 'sweetalert2'
 
 
-function BillCard({ props, bills }) {
-    if (props === "") {
+function BillCard({ billID, bills }) {
+    if (billID === "") {
         return (
-            <div>
-
-            </div>
+            <div style={{ marginLeft: 500, marginTop: 500 }}>
+                <h1 style={{ color: "#96684a" }}>Wähle links einen Kassenzettel aus, oder erstelle <a href="/createBill">hier</a> einen Kassenzettel</h1>
+            </div >
         );
     }
     return (
@@ -19,19 +19,19 @@ function BillCard({ props, bills }) {
                 <div className="row justify-content-lg-between">
                     <div className="col-sm">
                         <div className="col-sm">
-                            <h2 className="col-sm-4">{bills.get(props).date}</h2>
+                            <h2 className="col-sm-4">{bills.get(billID).date}</h2>
                         </div>
 
                     </div>
                     <div className="col-sm">
                         <div className="col-sm">
-                            <h1 className="h2 col-sm-4 text-primary">{bills.get(props).store}</h1>
+                            <h1 className="h2 col-sm-4 text-primary">{bills.get(billID).store}</h1>
                         </div>
                     </div>
                     <div className="col-sm-auto order-1 order-sm-2 text-sm-end mb-3">
                         <div className="mb-3">
                             <h2>Bill-ID</h2>
-                            <span className="d-block" id="Bill-ID">#{props}</span>
+                            <span className="d-block" id="Bill-ID">#{billID}</span>
                         </div>
                     </div>
                 </div>
@@ -49,7 +49,7 @@ function BillCard({ props, bills }) {
 
                         <tbody>
                             {
-                                Object.entries(bills.get(props).boughtArticles).map((item, key) => {
+                                Object.entries(bills.get(billID).boughtArticles).map((item, key) => {
                                     return (
                                         <tr key={key}>
                                             <th>{item[1].name}</th>
@@ -69,14 +69,14 @@ function BillCard({ props, bills }) {
                     <div className="col-md-8 col-lg-7">
                         <dl className="row text-sm-end">
                             <h1 className="col-sm-6">Total:</h1>
-                            <h1 className="col-sm-6">{bills.get(props).payedPrice}</h1>
+                            <h1 className="col-sm-6">{bills.get(billID).payedPrice}</h1>
                         </dl>
                     </div>
                 </div>
                 <div className="row justify-content-lg-between">
 
                     <div className="col-sm">
-                        <button className="btn btn-danger" onClick={() => deleteBill(props)}>Weg Damit !</button>
+                        <button className="btn btn-danger" onClick={() => deleteBill(billID)}>Weg Damit !</button>
                     </div>
                 </div>
             </div>
@@ -85,7 +85,7 @@ function BillCard({ props, bills }) {
     );
 }
 
-async function deleteBill(props) {
+async function deleteBill(billID) {
     Swal.fire({
         title: 'Warning!',
         text: 'Willst du den Kassenzettel wirklich löschen',
@@ -95,7 +95,7 @@ async function deleteBill(props) {
         denyButtonText: 'Abbrechen'
     }).then(async (result) => {
         if (result.isConfirmed) {
-            await deleteDoc(doc(db, "bills", props)).then(() => {
+            await deleteDoc(doc(db, "bills", billID)).then(() => {
                 Swal.fire({
                     title: 'Geschafft',
                     text: 'Kassenzettel wurde gelöscht',
@@ -107,7 +107,7 @@ async function deleteBill(props) {
             })
         } else if (result.isDenied) {
             Swal.fire({
-                title: 'Ups...',
+                title: 'Info',
                 text: 'Kassenzettel wurde nicht gelöscht',
                 icon: 'info',
                 confirmButtonText: 'OK'

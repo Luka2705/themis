@@ -3,8 +3,9 @@ import React from 'react';
 import Landing from './Landing';
 import Dashboard from './Dashboard';
 import BillCreator from './Bill-Creator';
-import Login from './Login';
-import SignIn from './Sign-In'
+import Login from './Authentication/Login';
+import SignIn from './Authentication/Sign-In';
+import Account from './Account';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />}></Route>
         <Route path="/createBill" element={<BillCreator />}></Route>
         <Route path="/signIn" element={<SignIn />}></Route>
+        <Route path="/account" element={<Account />}></Route>
       </Routes>
     </BrowserRouter>
   );
