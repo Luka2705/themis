@@ -3,7 +3,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { db, auth } from './firebase-config';
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import BillCard from './BillCard';
 import badge from './img/icons/person-badge.svg';
 import clipboard from './img/icons/clipboard-data.svg'
@@ -31,6 +31,14 @@ function Dashboard() {
         });
     }
 
+    function handleCardClick() {
+        if (window.innerWidth <= 720) {
+            setStyleIndicator("hidden");
+            setClassIndicator("js-offcanvas-start offcanvas offcanvas-start splitted-content-small splitted-content-bordered d-flex flex-column");
+            increaseCount(count => count + 1);
+        }
+    }
+
     function handleCardToggle() {
         if (count % 2 === 0) {
             setStyleIndicator("visible");
@@ -47,6 +55,7 @@ function Dashboard() {
             setStyleIndicator("hidden");
         }
     }
+
 
     return (
 
@@ -87,7 +96,7 @@ function Dashboard() {
                             </div>
                         </div>
                         <div className="navbar-vertical-footer">
-                            <a className="btn btn-ghost-secondary" style={{ marginLeft: 50 }} href="/">Log Out</a>
+                            <a className="btn btn-ghost-secondary" style={{ marginLeft: 50 }} onClick={() => signOut(auth).then(() => { window.location.href = "/" })}>Ausloggen</a>
                         </div>
                     </div>
                 </div>
@@ -101,7 +110,7 @@ function Dashboard() {
                             keys.map((item, key) => {
                                 return (
                                     <div id={key}>
-                                        <a className="card card-center card-transition" onClick={() => setCurrentBill(item)}>
+                                        <a className="card card-center card-transition" onClick={() => { setCurrentBill(item); handleCardClick() }}>
                                             <div className="card-body">
                                                 <span className="card-subtitle">{billsMap.get(item).store}</span>
                                                 <h3 className="card-title">{billsMap.get(item).date} - {billsMap.get(item).time}</h3>
@@ -110,7 +119,6 @@ function Dashboard() {
                                         </a>
                                         <hr />
                                     </div>
-
                                 );
                             })
                         }

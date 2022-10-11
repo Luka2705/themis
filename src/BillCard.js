@@ -8,7 +8,7 @@ import Swal from 'sweetalert2'
 function BillCard({ billID, bills }) {
     if (billID === "") {
         return (
-            <div style={{ marginLeft: 500, marginTop: 500 }}>
+            <div style={{ marginLeft: "30%", marginTop: "25%" }}>
                 <h1 style={{ color: "#96684a" }}>Wähle links einen Kassenzettel aus, oder erstelle <a href="/createBill">hier</a> einen Kassenzettel</h1>
             </div >
         );
@@ -40,10 +40,10 @@ function BillCard({ billID, bills }) {
                     <table className="table table-borderless table-nowrap table-align-middle">
                         <thead className="thead-light">
                             <tr>
-                                <th>Item</th>
-                                <th>Quantity</th>
-                                <th>Price Per Unit</th>
-                                <th className="table-text-end">Amount</th>
+                                <th>Einkaufartikel</th>
+                                <th>Anzahl</th>
+                                <th>Preis pro Artikel</th>
+                                <th className="table-text-end">Preis</th>
                             </tr>
                         </thead>
 

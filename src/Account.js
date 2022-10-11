@@ -2,8 +2,9 @@ import './style.css';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { db, auth } from './firebase-config';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { collection, getDocs, query, where } from "firebase/firestore";
+import Swal from 'sweetalert2';
 import badge from './img/icons/person-badge.svg';
 import clipboard from './img/icons/clipboard-data.svg'
 import plus from './img/icons/plus-square.svg'
@@ -13,14 +14,34 @@ import person from './img/no-user-image.gif'
 
 function Account() {
     const [currentUser, setUser] = useState({});
+    const [billsMap, setBillsMap] = useState(new Map());
+    const [keys, setKeys] = useState([]);
+    const keysWithoutDuplicates = [...new Set(keys)];
+    let stores = [];
+    let styles = ["bg-primary", "bg-success", "bg-warning", "bg-info", "bg-danger", "bg-dark", "bg-secondary"]
+    var count = {};
 
     //Set Current User
     useEffect(() => {
         onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
+            fetchData(currentUser.uid)
         });
     }, []);
 
+    async function fetchData(prop) {
+        const q = query(collection(db, "bills"), where("user", "==", prop));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            setKeys(keys => [...keys, doc.id]);
+            setBillsMap(new Map(billsMap.set(doc.id, doc.data())));
+        });
+    }
+
+    keysWithoutDuplicates.map((key, value) => {
+        stores.push(billsMap.get(key).store)
+    })
+    stores.forEach(function (i) { count[i] = (count[i] || 0) + 1; });
 
     if (currentUser === undefined) {
 
@@ -62,7 +83,7 @@ function Account() {
                                 </div>
                             </div>
                             <div className="navbar-vertical-footer">
-                                <a className="btn btn-ghost-secondary" style={{ marginLeft: 50 }} href="/">Log Out</a>
+                                <a className="btn btn-ghost-secondary" style={{ marginLeft: 50 }} onClick={() => signOut(auth).then(() => { window.location.href = "/" })}>Ausloggen</a>
                             </div>
                         </div>
                     </div>
@@ -103,7 +124,7 @@ function Account() {
                                         <ul className="list-inline list-px-2">
                                             <li className="list-inline-item">
                                                 <i className="bi-calendar-week me-1"></i>
-                                                <span>Account erstellt : 2013</span>
+                                                <h4>Account ID: <span className='text-muted'>{currentUser.uid}</span></h4>
                                             </li>
                                         </ul>
                                     </div>
@@ -114,7 +135,7 @@ function Account() {
                                         <div className="col-lg-4">
                                             <div className="card mb-3 mb-lg-5">
                                                 <div className="card-header card-header-content-between">
-                                                    <h4 className="card-header-title">Profile</h4>
+                                                    <h4 className="card-header-title">Deine Daten</h4>
                                                 </div>
                                                 <div className="card-body">
                                                     <ul className="list-unstyled list-py-2 text-dark mb-0">
@@ -138,27 +159,29 @@ function Account() {
                                                             <h4 className="card-header-title">Stores</h4>
                                                         </div>
                                                         <div className="col-auto">
-                                                            <span className="text-dark bold">-</span> Einkäufe
+                                                            <span className="text-dark bold">{stores.length}</span> Einkäufe
                                                         </div>
                                                     </div>
                                                     <div className="progress rounded-pill mb-3">
-                                                        <div className="progress-bar" role="progressbar" style={{ width: "33%" }}
-                                                            aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
-                                                        <div className="progress-bar" role="progressbar" style={{ width: "25%", opacity: 0.6 }}
-                                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                                        {
+                                                            Object.entries(count).map((key, value) => {
+                                                                return (
+                                                                    <div key={value} className={"progress-bar " + styles[value]} role="progressbar" style={{ width: Math.round((key[1] / stores.length) * 100) + "%" }}
+                                                                        aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                )
+                                                            })
+                                                        }
                                                     </div>
 
                                                     <ul className="list-inline list-px-2">
                                                         <li className="list-inline-item">Stores: </li>
-                                                        <li className="list-inline-item">
-                                                            <span className="legend-indicator bg-primary"></span>Rewe
-                                                        </li>
-                                                        <li className="list-inline-item">
-                                                            <span className="legend-indicator bg-primary opacity"></span>Lidl
-                                                        </li>
-                                                        <li className="list-inline-item">
-                                                            <span className="legend-indicator"></span>Selgros
-                                                        </li>
+                                                        {
+                                                            Object.entries(count).map((key, value) => {
+                                                                return (
+                                                                    <li className="list-inline-item"><span className={"legend-indicator " + styles[value]}></span>{key[0]} : {key[1]}</li>
+                                                                )
+                                                            })
+                                                        }
                                                     </ul>
                                                 </div>
                                             </div>
@@ -168,13 +191,11 @@ function Account() {
                                             <div className="card-body text-center">
 
                                                 <div className="mb-3">
-                                                    <h3>2-step verification</h3>
-                                                    <p>Protect your account now and enable 2-step verification in the settings.</p>
+                                                    <h3>Email Verifikation</h3>
+                                                    <p>Schütze dein Account und bestätige deine Email</p>
                                                 </div>
 
-                                                <a className="btn btn-primary"
-                                                    href="./account-settings.html#twoStepVerificationSection">Enable
-                                                    now</a>
+                                                <a className="btn btn-primary" >Verifikation starten</a>
                                             </div>
                                         </div>
                                     </div>

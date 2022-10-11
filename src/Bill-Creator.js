@@ -3,7 +3,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { db, auth } from './firebase-config';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { collection, addDoc, doc, setDoc } from "firebase/firestore";
 import badge from './img/icons/person-badge.svg';
 import clipboard from './img/icons/clipboard-data.svg'
@@ -29,7 +29,7 @@ function Dashboard() {
 
   //Initial Hash Map for the bill Entries
   useEffect(() => {
-    updateBillEntries(new Map(billentries.set(0, { name: "Item Name", quantity: 1, pricePerUnit: 0, price: 0 + " €", selected: updateIndicator })));
+    updateBillEntries(new Map(billentries.set(0, { name: "Artikel", quantity: 1, pricePerUnit: 0, price: 0 + " €", selected: updateIndicator })));
   }, []);
 
   //Sets the Quantity Counter in Hash Map for specific Item
@@ -135,7 +135,7 @@ function Dashboard() {
                 </div>
               </div>
               <div className="navbar-vertical-footer">
-                <a className="btn btn-ghost-secondary" style={{ marginLeft: 50 }} href="/">Log Out</a>
+                <a className="btn btn-ghost-secondary" style={{ marginLeft: 50 }} onClick={() => signOut(auth).then(() => { window.location.href = "/" })}>Ausloggen</a>
               </div>
             </div>
           </div>
@@ -151,7 +151,7 @@ function Dashboard() {
                     <div className="col-sm">
                       <div className="mb-1">
                         <dl className="row align-items-sm-center mb-0">
-                          <h1 className="text-primary col-md mb-2 mb-sm-0">Date: </h1>
+                          <h1 className="text-primary col-md mb-2 mb-sm-0">Datum: </h1>
                           <dd className="col-md-auto mb-0">
                             <input type="date" className="form-control w-auto" placeholder="12.Mai.2022" aria-label="" value={date} onChange={(e) => { updateDate(e.target.value) }} />
                           </dd>
@@ -178,19 +178,19 @@ function Dashboard() {
                 <div className="bg-light border-bottom p-2 mb-3">
                   <div className="row">
                     <div className="col-sm-5">
-                      <h6 className="card-title text-cap">Item</h6>
+                      <h6 className="card-title text-cap">Einkaufartikel</h6>
                     </div>
 
                     <div className="col-sm-3 d-none d-sm-inline-block">
-                      <h6 className="card-title text-cap">Quantity</h6>
+                      <h6 className="card-title text-cap">Anzahl</h6>
                     </div>
 
                     <div className="col-sm-2 d-none d-sm-inline-block">
-                      <h6 className="card-title text-cap">Price Per Unit</h6>
+                      <h6 className="card-title text-cap">Preis pro Artikel</h6>
                     </div>
 
                     <div className="col-sm-2 d-none d-sm-inline-block">
-                      <h6 className="card-title text-cap">Price</h6>
+                      <h6 className="card-title text-cap">Preis</h6>
                     </div>
                   </div>
                 </div>
@@ -248,7 +248,7 @@ function Dashboard() {
 
                   })
                 }
-                <a className="js-create-field form-link" onClick={() => updateBillEntries(new Map(billentries.set(billentries.size, { name: "Item Name", quantity: 1, pricePerUnit: 0, price: 0 })))}><i className="bi-plus"></i>Add item</a>
+                <a className="js-create-field form-link" onClick={() => updateBillEntries(new Map(billentries.set(billentries.size, { name: "Artikel", quantity: 1, pricePerUnit: 0, price: 0 })))}><i className="bi-plus"></i>Add item</a>
 
                 <hr className="my-5" />
 
@@ -262,7 +262,7 @@ function Dashboard() {
                     </dl>
                   </div>
                 </div>
-                <button className="btn btn-primary" onClick={() => createBill(billentries, price, storeName, date, user)}>Submit</button>
+                <button className="btn btn-primary" onClick={() => createBill(billentries, price, storeName, date, user)}>Kassenzettel erstellen</button>
               </div>
             </div>
           </div>
